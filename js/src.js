@@ -7,7 +7,7 @@ buttonArray =[]
 function todayWeather(search) {
     var dt = new Date()
     $.ajax({
-        url: "http://api.openweathermap.org/data/2.5/weather?q=" + search + "&apikey=028bd6c65fc449153d91ad43fd573ddb",
+        url: "https://api.openweathermap.org/data/2.5/weather?q=" + search + "&apikey=028bd6c65fc449153d91ad43fd573ddb",
         method: "GET"
     }).then(function (responce) {
         console.log(responce)
@@ -29,7 +29,7 @@ function todayWeather(search) {
         $("#today-weather").append(humidity)
         $("#today-weather").append(windSpeed)
         $.ajax({
-            url: "http://api.openweathermap.org/data/2.5/uvi?appid={appid}&lat=" + responce.coord.lat + "&lon=" + responce.coord.lon + "&apikey=028bd6c65fc449153d91ad43fd573ddb",
+            url: "https://api.openweathermap.org/data/2.5/uvi?appid={appid}&lat=" + responce.coord.lat + "&lon=" + responce.coord.lon + "&apikey=028bd6c65fc449153d91ad43fd573ddb",
             method: "GET"
         }).then(function (responce) {
             console.log(responce)
@@ -46,7 +46,7 @@ function fiveDayForcast(search) {
     h2.text("5-Day Forcast:")
     $(".five-day-forcast").append(h2)
     $.ajax({
-        url: "http://api.openweathermap.org/data/2.5/forecast/?q="+ search +",us&apikey=028bd6c65fc449153d91ad43fd573ddb",
+        url: "https://api.openweathermap.org/data/2.5/forecast/?q="+ search +",us&apikey=028bd6c65fc449153d91ad43fd573ddb",
         method: "GET"
     }).then(function (responce) {
         console.log(responce)
@@ -62,7 +62,7 @@ function fiveDayForcast(search) {
             var p = $("<p>")
             var temp = $("<p>")
             var img = $("<img>")
-            img.attr("src", "http://openweathermap.org/img/w/" + responce.list[floor].weather[0].icon + ".png")
+            img.attr("src", "https://openweathermap.org/img/w/" + responce.list[floor].weather[0].icon + ".png")
             img.attr("alt", "Weather")
             var humidity = $("<p>")
             humidity.text("Humidity: " + responce.list[floor].main.humidity)
