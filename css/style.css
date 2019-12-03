@@ -1,0 +1,19 @@
+body{
+color: white;
+background-color: yellow;
+background-repeat: no-repeat;
+background-size: cover;
+height: 100%;
+}
+.title{
+background-color: blue;
+color: white;
+border: 1px solid black;
+border-radius: 20px;
+}
+.mainBody{
+background-color: green;
+border: 1px solid black;
+border-radius: 20px;
+box-shadow: black 5px 5px;
+}
