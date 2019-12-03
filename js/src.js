@@ -1,9 +1,12 @@
+// create button array
 var buttonArray;  
+// saving the latest data to the button array
 if(localStorage.getItem("buttons") !== null){
 buttonArray = JSON.parse(localStorage.getItem("buttons"))
 }else{
 buttonArray =[]
 }
+// create function to display today's weather
 function todayWeather(search) {
     var dt = new Date()
     $.ajax({
@@ -11,11 +14,13 @@ function todayWeather(search) {
         method: "GET"
     }).then(function (responce) {
         console.log(responce)
+        // creating the html coponents
         var h2 = $("<h2>")
         var date = $("<h2>")
         var temp = $("<p>")
         var humidity = $("<p>")
         var windSpeed = $("<p>")
+        // adding the text companents
         windSpeed.text("Wind Speed: " + responce.wind.speed + " MPH")
         humidity.text("Humidity: " + responce.main.humidity + "%")
         temp.text("Temperature: " + (Math.floor(Math.round(responce.main.temp * 9 / 5) - 459.67)) + " F")
@@ -23,11 +28,13 @@ function todayWeather(search) {
         date.attr("style", "display:inline")
         h2.text(responce.name)
         h2.attr("style", "display:inline")
+        // appending the html tags to the today weather div
         $("#today-weather").append(h2)
         $("#today-weather").append(date)
         $("#today-weather").append(temp)
         $("#today-weather").append(humidity)
         $("#today-weather").append(windSpeed)
+        // starting my ajax call
         $.ajax({
             url: "https://api.openweathermap.org/data/2.5/uvi?appid={appid}&lat=" + responce.coord.lat + "&lon=" + responce.coord.lon + "&apikey=028bd6c65fc449153d91ad43fd573ddb",
             method: "GET"
@@ -40,20 +47,26 @@ function todayWeather(search) {
         })
     })
 }
+// creating a function to display the five day weather forcast
+
 function fiveDayForcast(search) {
- 
+//creating a header tag
     var h2 = $("<h2>")
     h2.text("5-Day Forcast:")
     $(".five-day-forcast").append(h2)
+    // starting the ajax call
     $.ajax({
         url: "https://api.openweathermap.org/data/2.5/forecast/?q="+ search +",us&apikey=028bd6c65fc449153d91ad43fd573ddb",
         method: "GET"
     }).then(function (responce) {
         console.log(responce)
+        // craeting a loop of the 40 objects so it only grabs 5 opjects in a increment of 8
         for (var i = 0; i <40; i++) {
+        // craeting my variables
             var div = $("<div>")
             div.attr("style", "display:inline-block")
             var floor = Math.floor(i =i +6.75)
+            //creating the current date
             var date = responce.list[floor].dt_txt
             var setDate = new Date(date)
             var splitDate = setDate.toDateString().split(" ")
@@ -62,6 +75,7 @@ function fiveDayForcast(search) {
             var p = $("<p>")
             var temp = $("<p>")
             var img = $("<img>")
+            //setting up my weather icons
             img.attr("src", "https://openweathermap.org/img/w/" + responce.list[floor].weather[0].icon + ".png")
             img.attr("alt", "Weather")
             var humidity = $("<p>")
@@ -76,6 +90,7 @@ function fiveDayForcast(search) {
         }
     })
 }
+//creating function to display the buttons
 function displayButtons(){
     var search = $("#search").val()
     for (var i = 0; i < buttonArray.length; i++) {
@@ -86,10 +101,12 @@ function displayButtons(){
     }
 }
 displayButtons()
+//added my function calls to a object, so it can be easier to reach
 var weather = {
 today:todayWeather,
 fiveDayForcast: fiveDayForcast
 }
+//started my button search event handler
 $("#btn-search").on("click", function () {
     var search = $("#search").val()
     $(".five-day-forcast").empty()
@@ -103,6 +120,7 @@ $("#btn-search").on("click", function () {
      $("#btn-storage").empty()
     displayButtons()
 })
+// started my button event listener
 $("#btn-storage").delegate("button","click",function(){
 $("#today-weather").empty()
 $(".five-day-forcast").empty()
